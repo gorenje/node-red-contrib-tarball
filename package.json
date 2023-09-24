@@ -1,0 +1,36 @@
+{
+  "name" : "@gregoriusrippenstein/node-red-contrib-tarball",
+  "version": "0.0.1",
+  "dependencies": {
+    "pako": "latest",
+    "memory-streams": "latest",
+    "tar-stream": "latest"
+  },
+
+  "keywords": [
+    "node-red", "tar", "ball", "tarball"
+  ],
+
+  "homepage": "https://flowhub.org",
+  "license": "Don't do evil.",
+  "author": "Gerrit Riessen <stupidity@spreads-the.love> (https://spread-the.love)",
+  "engines": {
+    "node": ">=16"
+  },
+
+  "node-red" : {
+    "version": ">=2.0.0",
+    "nodes": {
+      "tarball":   "nodes/90-tarball.js"
+    }
+  },
+
+  "description": "Generate a tarball from a bunch of files.",
+  "repository": {
+    "type": "flowhub",
+    "url": "git+https://github.com/gorenje/node-red-contrib-flowhub.git"
+  },
+  "bugs": {
+    "url": "https://flowhub.org"
+  }
+}
