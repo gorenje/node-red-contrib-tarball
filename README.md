@@ -42,8 +42,7 @@ For compression, `msg.payload` is assumed to be an array containing objects of t
 Payload is assumed to be a `Buffer` object. If `path` is not defined, the entry is ignored.
 
 Returned is a tar archive which can then be compressed using [Lzma](https://flows.nodered.org/node/@ecraneworldwide/node-red-contrib-lz4)
-  or <a href="https://flows.nodered.org/node/node-red-contrib-gzip" target="_blank">Gzip</a>.
-  
+  or [Gzip](https://flowhub.org/f/bd55b01d4cf1db22).
 
 ### Artifacts
 

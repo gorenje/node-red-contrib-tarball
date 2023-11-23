@@ -1,0 +1,224 @@
+[
+    {
+        "id": "5d85d7f47d1400bd",
+        "type": "inject",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "trigger",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 364,
+        "y": 677,
+        "wires": [
+            [
+                "9d554b4f5de32ce7"
+            ]
+        ]
+    },
+    {
+        "id": "9d554b4f5de32ce7",
+        "type": "template",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "File.one",
+        "field": "fileone",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "File one",
+        "output": "str",
+        "x": 604,
+        "y": 679,
+        "wires": [
+            [
+                "b5d08d7710947461"
+            ]
+        ]
+    },
+    {
+        "id": "b5d08d7710947461",
+        "type": "template",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "File.two",
+        "field": "filetwo",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "File two",
+        "output": "str",
+        "x": 606,
+        "y": 750,
+        "wires": [
+            [
+                "eed3c7e23a7e8a39"
+            ]
+        ]
+    },
+    {
+        "id": "eed3c7e23a7e8a39",
+        "type": "function",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "combine file data",
+        "func": "msg.payload = [\n    {\n        path: \"dir1/fileone.txt\",\n        payload: msg.fileone\n    },\n    {\n        path: \"dir2/filetwo.txt\",\n        payload: msg.filetwo\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 775,
+        "y": 836,
+        "wires": [
+            [
+                "c5a94f7ea2aaa9b2"
+            ]
+        ]
+    },
+    {
+        "id": "c5a94f7ea2aaa9b2",
+        "type": "tarball",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "",
+        "x": 993,
+        "y": 835,
+        "wires": [
+            [
+                "0312c8142a03c266",
+                "bb51080506423c42",
+                "e20f9dca7074b8ba"
+            ]
+        ]
+    },
+    {
+        "id": "0312c8142a03c266",
+        "type": "debug",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "should be buffer[3072]",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1212,
+        "y": 763,
+        "wires": []
+    },
+    {
+        "id": "bb51080506423c42",
+        "type": "function",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "gzip encode",
+        "func": "\nmsg.payload = pako.gzip(msg.payload)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "pako",
+                "module": "pako"
+            }
+        ],
+        "x": 1195,
+        "y": 860,
+        "wires": [
+            [
+                "4f6d9ead56225214",
+                "342d77aab65a71c2"
+            ]
+        ]
+    },
+    {
+        "id": "e20f9dca7074b8ba",
+        "type": "tarball",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "",
+        "x": 1176,
+        "y": 961,
+        "wires": [
+            [
+                "8703ee86863f3df0"
+            ]
+        ]
+    },
+    {
+        "id": "4f6d9ead56225214",
+        "type": "tarball",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "",
+        "x": 1427,
+        "y": 890,
+        "wires": [
+            [
+                "ed7a64a981851346"
+            ]
+        ]
+    },
+    {
+        "id": "342d77aab65a71c2",
+        "type": "debug",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "should be a Uint8Array",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1462,
+        "y": 822,
+        "wires": []
+    },
+    {
+        "id": "8703ee86863f3df0",
+        "type": "debug",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "2 files, 1 array",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1450,
+        "y": 961,
+        "wires": []
+    },
+    {
+        "id": "ed7a64a981851346",
+        "type": "debug",
+        "z": "bd55b01d4cf1db22",
+        "g": "fbc8f9d903e21ce0",
+        "name": "2 files, 1 array",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1705,
+        "y": 853,
+        "wires": []
+    }
+]

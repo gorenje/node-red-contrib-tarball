@@ -59,18 +59,21 @@ module.exports = function(RED) {
      */
     var extract = (payload, onFile, onDone, onTarError, onOtherError) => {
       import('file-type').then(module => {
-        const buffer = new Uint8Array(payload);
 
-        module.fileTypeFromBuffer(buffer).then(d => {
+        if ( !Buffer.isBuffer(payload)) {
+          payload = Buffer.from(payload)
+        }
+
+        module.fileTypeFromBuffer(payload).then(d => {
           switch (d.ext) {
             case 'gz':
-              extractTarFile(pakoGzip.inflate(buffer), onFile, onDone, onTarError)
+              extractTarFile(pakoGzip.inflate(payload), onFile, onDone, onTarError)
               break
             case 'tar':
-              extractTarFile(buffer, onFile, onDone, onTarError)
+              extractTarFile(payload, onFile, onDone, onTarError)
               break
             case 'xz':
-              lzmaNative.decompress(Buffer.from(buffer)).then(data => {
+              lzmaNative.decompress(payload).then(data => {
                 extractTarFile(data, onFile, onDone, onTarError)
               }).catch(err => {
                 onOtherError("tarball.error.xzcorrupt", err)
