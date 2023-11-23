@@ -2,35 +2,42 @@
   "name" : "@gregoriusrippenstein/node-red-contrib-tarball",
   "version": "0.0.1",
   "dependencies": {
-    "pako": "latest",
-    "memory-streams": "latest",
-    "tar-stream": "latest"
-  },
+    "pako": ">=2.1.0",
+    "tar-stream": ">=3.1.6",
+    "streamx": ">=2.15.5",
+    "lzma-native": ">=8.0.6",
+    "file-type": ">=18.7.0"
+  }, 
 
+  "description": "Create and extract tarballs in xz and gzip formats",
   "keywords": [
-    "node-red", "tar", "ball", "tarball"
+    "node-red",
+    "tar",
+    "xz",
+    "gzip",
+    "tarball",
+    "archive"
   ],
 
-  "homepage": "https://flowhub.org",
   "license": "Don't do evil.",
-  "author": "Gerrit Riessen <stupidity@spreads-the.love> (https://spread-the.love)",
+  "homepage": "https://github.com/gorenje/node-red-contrib-tarball#readme",
+  "author": "Gerrit Riessen <gerrit@openmindmap.org>",
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
 
   "node-red" : {
-    "version": ">=2.0.0",
+    "version": ">=3.0.0",
     "nodes": {
-      "tarball":   "nodes/90-tarball.js"
+       "tarball": "nodes/tarball.js"
     }
   },
 
-  "description": "Generate a tarball from a bunch of files.",
   "repository": {
-    "type": "flowhub",
-    "url": "git+https://github.com/gorenje/node-red-contrib-flowhub.git"
+    "type": "git",
+    "url": "https://github.com/gorenje/node-red-contrib-tarball.git"
   },
   "bugs": {
-    "url": "https://flowhub.org"
+    "url": "https://github.com/gorenje/node-red-contrib-tarball"
   }
 }

@@ -1,0 +1,12 @@
+{
+    "tarball": {
+        "error": {
+            "general": "error occurred",
+            "formatnotsupported": "format not supported",
+            "untar": "error while untarring file",
+            "xzcorrupt": "Lzma/Xz data corrupt",
+            "unknownpayload": "type of msg.payload is not supported",
+            "compressfailed": "tar creation failed"
+        }
+    }
+}
