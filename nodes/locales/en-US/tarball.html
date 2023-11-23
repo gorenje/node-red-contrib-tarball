@@ -12,8 +12,8 @@
 <p>
   <code>
   {<br>
-    path: "full path in tar file",<br>
-    payload: "file content",<br>
+    path: "full/path/in/tar/file.txt",<br>
+    payload: Buffer.from("file contents"),<br>
   }<br>
   </code>
 <p>
@@ -48,7 +48,7 @@
   <code>
   {<br>
     path: "full path of file",<br>
-    payload: &lt;Buffer object containing file contents&gt;<br>
+    payload: Buffer.from("object containing file contents in Buffer form")<br>
   }<br>
   </code>
 

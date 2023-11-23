@@ -54,6 +54,9 @@ module.exports = function(RED) {
       stream.pipe(extract);
     }
 
+    /**
+     *  Extract any payload checking the encoding: lz, gzip or none.
+     */
     var extract = (payload, onFile, onDone, onTarError, onOtherError) => {
       import('file-type').then(module => {
         const buffer = new Uint8Array(payload);
@@ -84,6 +87,9 @@ module.exports = function(RED) {
       })
     }
 
+    /**
+     * Compress payload to a tar file without compression.
+     */
     var compress = (payload, onDone, onError) => {
       const pack = tarStream.pack()
 
@@ -139,7 +145,8 @@ module.exports = function(RED) {
         send({
           ...msg,
           complete: true,
-          payload: allFiles
+          payload: allFiles,
+          path: undefined
         })
         done();
       };
@@ -170,7 +177,7 @@ module.exports = function(RED) {
       switch (typeof msg.payload ) {
         case 'object':
           if (Array.isArray(msg.payload)) {
-            compress( msg.payload, onCompDone, onCompError)
+            compress(msg.payload, onCompDone, onCompError)
           } else {
             extract(msg.payload, onFile, onDone, onTarError, onOtherError)
           }

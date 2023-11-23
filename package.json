@@ -9,7 +9,7 @@
     "file-type": ">=18.7.0"
   }, 
 
-  "description": "Create and extract tarballs in xz and gzip formats",
+  "description": "Create tar files and extract tarballs in xz and gzip formats",
   "keywords": [
     "node-red",
     "tar",
