@@ -28,9 +28,9 @@
 <p><b>Extraction</b>
 
 <p>
-  Extraction assumes that the msg.payload is an ArrayBuffer with
+  Extraction assumes that the msg.payload is an Buffer with
   the contents of the tarball. Either encoded in xz format or
-  gzip format.
+  gzip format or non-encoded tar archive.
 
 <p>
   A message is generated as each file is extracted. All data is encoded

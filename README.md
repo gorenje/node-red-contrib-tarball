@@ -15,56 +15,33 @@ Extraction generates a message per file found and a final message with `complete
 
 This behaviour allows this node to be connected to a join node in manual mode.
 
+Extraction assumes that the msg.payload is an Buffer with the contents of the tarball. Either encoded in xz format, gzip format or non-encoded tar archive.
 
-<p><b>Extraction</b>
+A message is generated for each file that is extracted. All data is encoded in a `Buffer` object as it is not possible to distinguish between binary content and text content. The message has a `path` attribute for the file name and `payload` contains the buffer with the files contents.
 
-<p>
-  Extraction assumes that the msg.payload is an ArrayBuffer with
-  the contents of the tarball. Either encoded in xz format or
-  gzip format.
+Once all files have been extracted, one file message is sent that contains `complete` set to true and `payload` being an array containing all files that were extracted. Each file is represented by a hash object: 
 
-<p>
-  A message is generated as each file is extracted. All data is encoded
-  in a <code>Buffer</code> object as it is not possible to distinguish between
-  binary content and text content. The message has a <code>path</code> attribute 
-  for the file name and <code>payload</code> contains the buffer with the files
-  contents.
-
-<p>
-  Once all files have been extracted, one file message is sent that
-  contains <code>complete</code> set to true and <code>payload</code> being an array containing
-  all files that were extracted. Each file is represented by a hash
-  object: 
-<p>
-  <code>
-  {<br>
-    path: "full path of file",<br>
-    payload: Buffer.from("object containing file contents in Buffer form")<br>
-  }<br>
-  </code>
-
-
+```
+{
+  path: "full path of file",
+  payload: Buffer.from("object containing file contents in Buffer form")
+}
+```
 
 **Compression**
 
-<p>
-  For compression, <code>msg.payload</code> is assumed to be an array containing
-  objects of the form:
+For compression, `msg.payload` is assumed to be an array containing objects of the form:
 
-<p>
-  <code>
-  {<br>
-    path: "full/path/in/tar/file.txt",<br>
-    payload: Buffer.from("file contents"),<br>
-  }<br>
-  </code>
-<p>
-  Payload is assumed to be a <code>Buffer</code> object. If <code>path</code> is not defined, the
-  entry is ignored.
+```
+{
+  path: "full/path/in/tar/file.txt",
+  payload: Buffer.from("file contents"),
+}
+```
 
-<p>
-  Returned is a tar archive which can then be compressed using 
-  <a href="https://flows.nodered.org/node/@ecraneworldwide/node-red-contrib-lz4" target="_blank">Lzma</a>
+Payload is assumed to be a `Buffer` object. If `path` is not defined, the entry is ignored.
+
+Returned is a tar archive which can then be compressed using [Lzma](https://flows.nodered.org/node/@ecraneworldwide/node-red-contrib-lz4)
   or <a href="https://flows.nodered.org/node/node-red-contrib-gzip" target="_blank">Gzip</a>.
   
 

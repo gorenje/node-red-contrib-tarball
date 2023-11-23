@@ -109,7 +109,8 @@ module.exports = function(RED) {
 
       payload.forEach((elem) => {
         if ( elem.path && elem.path != "" ) {
-          pack.entry({ name: elem.path }, elem.payload)
+          var buf = Buffer.isBuffer(elem.payload) ? elem.payload : Buffer.from(elem.payload)
+          pack.entry({ name: elem.path }, buf)
         }
       })
 
