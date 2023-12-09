@@ -132,47 +132,58 @@ module.exports = function(RED) {
       */
     node.on("input", function(msg, send, done) {
 
+      var onOtherError = (localeKey, err) => {
+        msg.error = err
+        done(RED._(localeKey), msg)
+      };
+
       /* no payload, no dice */
-      if (!msg.hasOwnProperty('payload'))
-        return node.send(msg);
+      if (!msg.hasOwnProperty('payload')) {
+        return onOtherError("tarball.error.nopayload", { message: RED._("tarball.error.nopayload") })
+      }
 
       /** Extraction handlers **/
       var onFile = (path, content) => {
+        node.status({ fill: "yellow", shape: "dot", text: path })
         send({
           ...msg,
           path: path,
           payload: content
-        })
+        }, false)
       };
 
       var onDone = (allFiles) => {
+        node.status({ fill: "green", shape: "dot", text: RED._("tarball.info.complete_extraction") })
         send({
           ...msg,
           complete: true,
           payload: allFiles,
           path: undefined
-        })
+        }, false)
+        
+        setTimeout(() => { node.status({}) }, 2000)
         done();
       };
 
       var onTarError = (err) => {
+        node.status({ fill: "red", shape: "dot", text: RED._("tarball.error.general") })
         msg.error = err
         done(RED._("tarball.error.untar"), msg)
       };
 
-      var onOtherError = (localeKey, err) => {
-        msg.error = err
-        done(RED._(localeKey), msg)
-      };
       
       /** compression handlers **/
       var onCompDone = (tardata) => {
+        node.status({ fill: "green", shape: "dot", text: RED._("tarball.info.complete_archive") })
         msg.payload = tardata
-        send(msg)
+        send(msg,false)
+
+        setTimeout(() => { node.status({}) }, 2000)
         done()
       };
 
       var onCompError = (err) => {
+        node.status({ fill: "red", shape: "dot", text: RED._("tarball.error.general") })
         msg.error = err
         done(RED._("tarball.error.compressfailed"), msg)
       };

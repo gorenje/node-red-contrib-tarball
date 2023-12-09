@@ -6,7 +6,12 @@
             "untar": "error while untarring file",
             "xzcorrupt": "Lzma/Xz data corrupt",
             "unknownpayload": "type of msg.payload is not supported",
-            "compressfailed": "tar creation failed"
+            "compressfailed": "tar creation failed",
+            "nopayload": "no payload set on msg"
+        },
+        "info": {
+            "complete_extraction": "extraction complete",
+            "complete_archive": "archive complete"
         }
     }
 }
