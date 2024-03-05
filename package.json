@@ -20,7 +20,7 @@
   ],
 
   "license": "Don't do evil.",
-  "homepage": "https://github.com/gorenje/node-red-contrib-tarball#readme",
+  "homepage": "https://flowhub.org/f/cd8ee0cc76ab3339",
   "author": "Gerrit Riessen <gerrit@openmindmap.org>",
   "engines": {
     "node": ">=14"
